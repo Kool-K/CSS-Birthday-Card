@@ -12,6 +12,11 @@
       rel="stylesheet"
     />
     <style>
+      /* --- GLOBAL RESET --- */
+      * {
+        box-sizing: border-box;
+      }
+
       body {
         margin: 0;
         padding: 0;
@@ -75,12 +80,8 @@
       }
 
       @keyframes spinIntro {
-        0% {
-          transform: rotateX(0deg);
-        }
-        100% {
-          transform: rotateX(360deg);
-        }
+        0% { transform: rotateX(0deg); }
+        100% { transform: rotateX(360deg); }
       }
 
       /* =========================================
@@ -94,10 +95,15 @@
         height: 100%;
         opacity: 0;
         transition: opacity 2s ease-in;
+        
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
+        /* Distribute space smartly so nothing touches edges */
+        justify-content: space-evenly; 
+        
+        /* Add padding so content stays away from screen bezel */
+        padding: 2vh 2vw; 
 
         background: radial-gradient(circle at center, #333 0%, #000 100%);
         background-image: url("background.png");
@@ -105,28 +111,27 @@
         background-position: center;
       }
 
-      /* --- UPDATED FRAME CSS FOR PERFECT ASPECT RATIO --- */
+      /* --- FRAME CSS --- */
       .frame-container {
         position: relative;
         
-        /* FIX: Determine width based on the limiting dimension.
-           In Portrait, 80vw is smaller. In Landscape, 45vh is smaller.
-           This ensures the height (derived from aspect-ratio) never overflows the screen. */
-        width: min(80vw, 45vh);
-        
-        /* Enforce vertical rectangle shape */
+        /* Default Portrait Settings */
+        width: 80vw;
+        max-width: 400px;
         aspect-ratio: 3 / 4; 
         
-        /* Prevent flexbox from squashing the height */
-        flex-shrink: 0; 
+        /* Important: Don't let it get taller than 40% of screen height 
+           initially, to save room for text */
+        max-height: 45vh; 
 
         border: 12px solid #3e2723;
         border-radius: 4px;
         background: #000;
         box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
-        margin-bottom: 20px;
+        
         overflow: hidden;
         transform: perspective(1000px) rotateX(5deg);
+        flex-shrink: 1; /* Allow shrinking if screen is tiny */
       }
 
       .frame-container::after {
@@ -168,18 +173,19 @@
       .text-container {
         text-align: center;
         z-index: 20;
-        padding: 0 15px;
+        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 5px; 
+        /* Minimize gaps */
+        gap: 2vh; 
       }
 
       .masked-text {
         font-size: clamp(2rem, 5vw, 4rem);
         font-weight: 900;
         margin: 0;
-        line-height: 1.1;
+        line-height: 1;
         text-transform: uppercase;
         color: transparent;
         background-image: url("https://images.unsplash.com/photo-1507166763745-bfe008fbb831?q=80&w=1170&auto=format&fit=crop");
@@ -193,18 +199,14 @@
       }
 
       @keyframes animate-background {
-        0% {
-          background-position: 0 50%;
-        }
-        100% {
-          background-position: 100% 50%;
-        }
+        0% { background-position: 0 50%; }
+        100% { background-position: 100% 50%; }
       }
 
       /* --- SPLIT TEXT (THANK YOU) --- */
       .split-text {
         position: relative;
-        margin: 15px 0 20px 0;
+        margin: 0;
         padding: 0;
         font-size: clamp(1.8rem, 4vw, 3.5rem);
         color: transparent;
@@ -231,12 +233,8 @@
         width: 100%;
       }
 
-      .split-text span:nth-child(1) {
-        clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
-      }
-      .split-text span:nth-child(2) {
-        clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
-      }
+      .split-text span:nth-child(1) { clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%); }
+      .split-text span:nth-child(2) { clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%); }
 
       .split-text span:nth-child(3) {
         position: absolute;
@@ -257,26 +255,14 @@
       }
 
       @media (hover: hover) {
-        .split-text:hover span:nth-child(1) {
-          transform: translateY(-0.6em);
-        }
-        .split-text:hover span:nth-child(2) {
-          transform: translateY(0.6em);
-        }
-        .split-text:hover span:nth-child(3) {
-          transform: translate(-50%, -50%) scaleY(1);
-        }
+        .split-text:hover span:nth-child(1) { transform: translateY(-0.6em); }
+        .split-text:hover span:nth-child(2) { transform: translateY(0.6em); }
+        .split-text:hover span:nth-child(3) { transform: translate(-50%, -50%) scaleY(1); }
       }
 
-      .split-text.active span:nth-child(1) {
-        transform: translateY(-0.6em);
-      }
-      .split-text.active span:nth-child(2) {
-        transform: translateY(0.6em);
-      }
-      .split-text.active span:nth-child(3) {
-        transform: translate(-50%, -50%) scaleY(1);
-      }
+      .split-text.active span:nth-child(1) { transform: translateY(-0.6em); }
+      .split-text.active span:nth-child(2) { transform: translateY(0.6em); }
+      .split-text.active span:nth-child(3) { transform: translate(-50%, -50%) scaleY(1); }
 
       /* --- WAVE TEXT UPDATED --- */
       .wave-text {
@@ -284,7 +270,7 @@
         font-family: "Lobster Two", cursive;
         color: #000000;
         letter-spacing: 1px;
-        margin-top: 10px;
+        margin-top: 0; /* Removed margin to save space */
         
         display: flex;
         flex-wrap: wrap;
@@ -304,13 +290,8 @@
       }
 
       @keyframes wave {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-5px);
-        } 
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); } 
       }
 
       #upload-btn {
@@ -328,6 +309,27 @@
         display: none;
         box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
       }
+
+      /* =========================================
+         LANDSCAPE / HORIZONTAL MODE FIXES
+         ========================================= */
+      @media (orientation: landscape) {
+          /* When screen is horizontal, height is the limiting factor */
+          .frame-container {
+              /* Shrink frame to fit */
+              height: 40vh; 
+              width: auto; /* Width auto-calculates from aspect-ratio */
+              aspect-ratio: 3/4;
+              margin-bottom: 2vh;
+          }
+          
+          /* Force text to scale down based on HEIGHT (vh) not width */
+          .masked-text { font-size: 7vh; }
+          .split-text { font-size: 6vh; margin: 1vh 0; }
+          .wave-text { font-size: 4vh; }
+          .text-container { gap: 1vh; }
+      }
+
     </style>
   </head>
   <body>

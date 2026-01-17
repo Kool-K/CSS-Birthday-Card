@@ -1,513 +1,554 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <title>Happy Birthday Kaka</title>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&family=Lobster+Two:ital,wght@1,700&display=swap" rel="stylesheet">
-        <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #000;
-            font-family: 'Poppins', sans-serif;
-            height: 100vh;
-            width: 100vw;
-        }
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Happy Birthday Kaka</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&family=Lobster+Two:ital,wght@1,700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #000;
+        font-family: "Poppins", sans-serif;
+        height: 100vh;
+        width: 100vw;
+      }
 
-        /* =========================================
+      /* =========================================
            1. THE 3D SPINNER (INTRO)
            ========================================= */
-        #intro-layer {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            perspective: 800px;
-            overflow: hidden;
-            transition: opacity 1s ease-out;
-        }
+      #intro-layer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        perspective: 800px;
+        overflow: hidden;
+        transition: opacity 1s ease-out;
+      }
 
-        .spinner-box {
-            position: relative;
-            transform-style: preserve-3d;
-            animation: spinIntro 12s linear infinite;
-        }
+      .spinner-box {
+        position: relative;
+        transform-style: preserve-3d;
+        animation: spinIntro 12s linear infinite;
+      }
 
-        .spinner-box span {
-            position: absolute;
-            top: 0; left: 0;
-            font-size: 6vmin; 
-            line-height: 1;
-            color: #fff;
-            white-space: nowrap;
-            text-transform: uppercase;
-            transform-origin: center;
-            transform-style: preserve-3d;
-            transform: rotateX(calc(var(--i) * 30deg)) translateZ(25vmin);
-            backface-visibility: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100vw; 
-            margin-left: -50vw; 
-            text-shadow: 0 0 15px rgba(255,255,255,0.4);
-        }
+      .spinner-box span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-size: 6vmin;
+        line-height: 1;
+        color: #fff;
+        white-space: nowrap;
+        text-transform: uppercase;
+        transform-origin: center;
+        transform-style: preserve-3d;
+        transform: rotateX(calc(var(--i) * 30deg)) translateZ(25vmin);
+        backface-visibility: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        margin-left: -50vw;
+        text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+      }
 
-        .spinner-box span i {
-            color: #ff0055;
-            font-style: normal;
-            margin-left: 0.2em;
-        }
+      .spinner-box span i {
+        color: #ff0055;
+        font-style: normal;
+        margin-left: 0.2em;
+      }
 
-        @keyframes spinIntro {
-            0% { transform: rotateX(0deg); }
-            100% { transform: rotateX(360deg); }
+      @keyframes spinIntro {
+        0% {
+          transform: rotateX(0deg);
         }
+        100% {
+          transform: rotateX(360deg);
+        }
+      }
 
-        /* =========================================
+      /* =========================================
            2. THE LIVING ROOM SCENE
            ========================================= */
-        #room-layer {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            opacity: 0;
-            transition: opacity 2s ease-in;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            
-            /* Background Setup */
-            background: radial-gradient(circle at center, #333 0%, #000 100%);
-            background-image: url('background.png'); /* Ensure this file exists! */
-            background-size: cover;
-            background-position: center;
-        }
+      #room-layer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 2s ease-in;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
 
-        /* --- THE FRAME (Smaller Size) --- */
-       .frame-container {
-            position: relative;
-            
-            /* FIX: Use vmin so it scales by the smaller screen dimension.
-               This prevents it from getting too tall in landscape mode. */
-            width: 45vmin; 
-            
-            max-width: 300px; 
-            
-            /* FIX: Ensure it never takes up more than 60% of screen height */
-            max-height: 60vh;
-            
-            aspect-ratio: 3/4;
-            
-            border: 12px solid #3e2723;
-            border-radius: 4px;
-            background: #000;
-            
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-            
-            margin-bottom: 30px;
-            overflow: hidden;
-            transform: perspective(1000px) rotateX(5deg);
-        }
+        background: radial-gradient(circle at center, #333 0%, #000 100%);
+        background-image: url("background.png");
+        background-size: cover;
+        background-position: center;
+      }
 
-        .frame-container::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            border: 4px solid #d4af37;
-            pointer-events: none;
-            z-index: 10;
-        }
+      .frame-container {
+        position: relative;
 
-        canvas {
-            display: block;
-            width: 100%;
-            height: 100%;
-        }
+        /* SMART WIDTH: 
+       - On Portrait (phones): Use 80% of width so it's nice and big.
+       - On Landscape (turned sideways): Limit it so it doesn't get too tall.
+    */
+        width: 80vw;
+        max-width: 45vh; /* This constraint saves you in horizontal mode! */
 
-        .jigsaw-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            opacity: 0; 
-            transition: opacity 2s ease;
-            mix-blend-mode: normal; 
-            z-index: 5;
-            background-image: url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M100 0 H0 V100 H100 V0 Z' fill='none' stroke='rgba(0,0,0,0.7)' stroke-width='3'/%3E%3Cpath d='M50 0 V20 A10 10 0 0 1 50 40 V50 H60 A10 10 0 0 0 80 50 H100' fill='none' stroke='rgba(0,0,0,0.7)' stroke-width='3'/%3E%3Cpath d='M0 50 H20 A10 10 0 0 1 40 50 H50 V60 A10 10 0 0 0 50 80 V100' fill='none' stroke='rgba(0,0,0,0.7)' stroke-width='3'/%3E%3C/svg%3E");
-            background-size: 50px 50px;
-        }
+        aspect-ratio: 3/4; /* Maintains the rectangle shape */
 
-        /* =========================================
-           3. TEXT STYLES (MASKED TITLE)
+        border: 12px solid #3e2723;
+        border-radius: 4px;
+        background: #000;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+        margin-bottom: 20px;
+        overflow: hidden;
+        transform: perspective(1000px) rotateX(5deg);
+      }
+
+      .frame-container::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: 4px solid #d4af37;
+        pointer-events: none;
+        z-index: 10;
+      }
+
+      canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      .jigsaw-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 2s ease;
+        mix-blend-mode: normal;
+        z-index: 5;
+        background-image: url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M100 0 H0 V100 H100 V0 Z' fill='none' stroke='rgba(0,0,0,0.7)' stroke-width='3'/%3E%3Cpath d='M50 0 V20 A10 10 0 0 1 50 40 V50 H60 A10 10 0 0 0 80 50 H100' fill='none' stroke='rgba(0,0,0,0.7)' stroke-width='3'/%3E%3Cpath d='M0 50 H20 A10 10 0 0 1 40 50 H50 V60 A10 10 0 0 0 50 80 V100' fill='none' stroke='rgba(0,0,0,0.7)' stroke-width='3'/%3E%3C/svg%3E");
+        background-size: 50px 50px;
+      }
+
+      /* =========================================
+           3. TEXT STYLES 
            ========================================= */
-        .text-container {
-            text-align: center;
-            z-index: 20;
-            padding: 0 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
+      .text-container {
+        text-align: center;
+        z-index: 20;
+        padding: 0 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px; /* Reduced gap to fit new line */
+      }
+
+      .masked-text {
+        font-size: clamp(2rem, 5vw, 4rem);
+        font-weight: 900;
+        margin: 0;
+        line-height: 1.1;
+        text-transform: uppercase;
+        color: transparent;
+        background-image: url("https://images.unsplash.com/photo-1507166763745-bfe008fbb831?q=80&w=1170&auto=format&fit=crop");
+        background-size: 200%;
+        background-position: 0 50%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: animate-background 5s infinite alternate linear;
+        filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+      }
+
+      @keyframes animate-background {
+        0% {
+          background-position: 0 50%;
         }
-
-        .masked-text {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: 900;
-            margin: 0;
-            line-height: 1.1;
-            text-transform: uppercase;
-            color: transparent;
-            /* Use your local dark texture or this placeholder */
-            background-image: url('https://images.unsplash.com/photo-1507166763745-bfe008fbb831?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-            background-size: 200%; 
-            background-position: 0 50%;
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: animate-background 5s infinite alternate linear;
-            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));
+        100% {
+          background-position: 100% 50%;
         }
+      }
 
-        @keyframes animate-background {
-            0% { background-position: 0 50%; }
-            100% { background-position: 100% 50%; }
+      /* --- SPLIT TEXT (THANK YOU) --- */
+      .split-text {
+        position: relative;
+        margin: 15px 0 20px 0;
+        padding: 0;
+        font-size: clamp(1.8rem, 4vw, 3.5rem);
+        color: transparent;
+        text-transform: uppercase;
+        font-weight: 900;
+        letter-spacing: 2px;
+        cursor: pointer;
+        height: 1.2em;
+        filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.8));
+        max-width: 90vw;
+        line-height: 1.2;
+        /* Disable User Select to prevent highlighting on tap */
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .split-text span:nth-child(1),
+      .split-text span:nth-child(2) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: #e0e0e0;
+        transition: 0.5s;
+        overflow: visible;
+        width: 100%;
+      }
+
+      .split-text span:nth-child(1) {
+        clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+      }
+      .split-text span:nth-child(2) {
+        clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+      }
+
+      .split-text span:nth-child(3) {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scaleY(0);
+        width: 100%;
+        color: #000;
+        background: #d4af37;
+        font-size: 0.35em;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-align: center;
+        transition: 0.5s;
+        padding: 5px 0;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        z-index: 1;
+      }
+
+      /* --- MOBILE FIX: ONLY HOVER ON MOUSE DEVICES --- */
+      @media (hover: hover) {
+        .split-text:hover span:nth-child(1) {
+          transform: translateY(-0.6em);
         }
-
-       /* =========================================
-
-           4. SPLIT TEXT EFFECT (THANK YOU) - FIXED
-
-           ========================================= */
-
-        .split-text {
-
-            position: relative;
-
-            margin: 20px 0 40px 0; /* Added bottom margin for safety */
-
-            padding: 0;
-
-            font-size: clamp(2rem, 5vw, 4rem);
-
-            color: transparent;
-
-            text-transform: uppercase;
-
-            font-weight: 900;
-
-            letter-spacing: 2px;
-
-            cursor: pointer;
-
-            height: 1.2em; 
-
-            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.8));
-
-            /* Crucial: Prevent horizontal scroll if text gets too wide */
-
-            max-width: 90vw; 
-
-            line-height: 1.2;
-
+        .split-text:hover span:nth-child(2) {
+          transform: translateY(0.6em);
         }
-
-
-
-        /* Top Half */
-
-        .split-text span:nth-child(1) {
-
-            position: absolute;
-
-            top: 0; left: 0;
-
-            color: #e0e0e0;
-
-            transition: 0.5s;
-
-            clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
-
-            overflow: visible; /* Changed from hidden to avoid clipping shadows */
-
-            width: 100%;
-
+        .split-text:hover span:nth-child(3) {
+          transform: translate(-50%, -50%) scaleY(1);
         }
+      }
 
+      /* --- CLICK/TAP STATE (WORKS EVERYWHERE) --- */
+      .split-text.active span:nth-child(1) {
+        transform: translateY(-0.6em);
+      }
+      .split-text.active span:nth-child(2) {
+        transform: translateY(0.6em);
+      }
+      .split-text.active span:nth-child(3) {
+        transform: translate(-50%, -50%) scaleY(1);
+      }
 
+      /* --- NEW WAVE TEXT --- */
+      .wave-text {
+        font-size: clamp(1rem, 3vw, 1.5rem);
+        font-family:
+          "Lobster Two", cursive; /* Using the cursive font for contrast */
+        color: #000000;
+        letter-spacing: 2px;
+        margin-top: 10px;
+      }
 
-        /* Bottom Half */
+      .wave-text span {
+        display: inline-block;
+        animation: wave 1.5s ease-in-out infinite;
+      }
 
-        .split-text span:nth-child(2) {
+      /* Generate delays for wave effect */
+      .wave-text span:nth-child(1) {
+        animation-delay: 0s;
+      }
+      .wave-text span:nth-child(2) {
+        animation-delay: 0.1s;
+      }
+      .wave-text span:nth-child(3) {
+        animation-delay: 0.2s;
+      }
+      .wave-text span:nth-child(4) {
+        animation-delay: 0.3s;
+      }
+      .wave-text span:nth-child(5) {
+        animation-delay: 0.4s;
+      }
+      .wave-text span:nth-child(6) {
+        animation-delay: 0.5s;
+      }
+      .wave-text span:nth-child(7) {
+        animation-delay: 0.6s;
+      }
+      .wave-text span:nth-child(8) {
+        animation-delay: 0.7s;
+      }
+      .wave-text span:nth-child(9) {
+        animation-delay: 0.8s;
+      }
+      .wave-text span:nth-child(10) {
+        animation-delay: 0.9s;
+      }
+      .wave-text span:nth-child(11) {
+        animation-delay: 1s;
+      }
 
-            position: absolute;
-
-            top: 0; left: 0;
-
-            color: #e0e0e0;
-
-            transition: 0.5s;
-
-            clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
-
-            overflow: visible;
-
-            width: 100%;
-
+      @keyframes wave {
+        0%,
+        100% {
+          transform: translateY(0);
         }
+        50% {
+          transform: translateY(-5px);
+        } /* Gentle bounce */
+      }
 
-
-
-        /* Hidden Middle Message */
-
-        .split-text span:nth-child(3) {
-
-            position: absolute;
-
-            top: 50%; left: 50%;
-
-            transform: translate(-50%, -50%) scaleY(0);
-
-            width: 100%;
-
-            color: #000;
-
-            background: #d4af37;
-
-            font-size: 0.35em; 
-
-            font-weight: 700;
-
-            letter-spacing: 0.2em; /* Reduced spacing to fit better */
-
-            text-align: center;
-
-            transition: 0.5s;
-
-            padding: 5px 0; /* Slightly thicker bar */
-
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-
-            z-index: 1; /* Ensure it stays behind the split text if overlapping */
-
-        }
-
-
-
-        /* Hover & Active States - REDUCED MOVEMENT */
-
-        /* Reduced translateY from 20px to 0.6em (relative unit) */
-
-        
-
-        .split-text:hover span:nth-child(1),
-
-        .split-text.active span:nth-child(1) {
-
-            transform: translateY(-0.6em); /* Moves up just enough */
-
-        }
-
-
-
-        .split-text:hover span:nth-child(2),
-
-        .split-text.active span:nth-child(2) {
-
-            transform: translateY(0.6em); /* Moves down just enough */
-
-        }
-
-
-
-        .split-text:hover span:nth-child(3),
-
-        .split-text.active span:nth-child(3) {
-
-            transform: translate(-50%, -50%) scaleY(1);
-
-        }
-
-        /* Upload Button */
-        #upload-btn {
-            position: absolute;
-            z-index: 50;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 12px 25px;
-            background: #d4af37;
-            border: none;
-            border-radius: 30px;
-            font-weight: bold;
-            cursor: pointer;
-            display: none;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
-        }
-        </style>
-    </head>
-    <body>
-        <div id="intro-layer">
-            <div class="spinner-box">
-                <span style="--i:1">
-                    Happy
-                    <i>Birthday</i>
-                </span>
-                <span style="--i:2">
-                    Dear
-                    <i>Kaka</i>
-                </span>
-                <span style="--i:3">
-                    Happy
-                    <i>Birthday</i>
-                </span>
-                <span style="--i:4">
-                    Dear
-                    <i>Kaka</i>
-                </span>
-                <span style="--i:5">
-                    Happy
-                    <i>Birthday</i>
-                </span>
-                <span style="--i:6">
-                    Dear
-                    <i>Kaka</i>
-                </span>
-                <span style="--i:7">
-                    Happy
-                    <i>Birthday</i>
-                </span>
-                <span style="--i:8">
-                    Dear
-                    <i>Kaka</i>
-                </span>
-                <span style="--i:9">
-                    Happy
-                    <i>Birthday</i>
-                </span>
-                <span style="--i:10">
-                    Dear
-                    <i>Kaka</i>
-                </span>
-                <span style="--i:11">
-                    Happy
-                    <i>Birthday</i>
-                </span>
-                <span style="--i:12">
-                    Dear
-                    <i>Kaka</i>
-                </span>
-            </div>
+      #upload-btn {
+        position: absolute;
+        z-index: 50;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 12px 25px;
+        background: #d4af37;
+        border: none;
+        border-radius: 30px;
+        font-weight: bold;
+        cursor: pointer;
+        display: none;
+        box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="intro-layer">
+      <div class="spinner-box">
+        <span style="--i: 1">
+          Happy
+          <i>Birthday</i>
+        </span>
+        <span style="--i: 2">
+          Dear
+          <i>Kaka</i>
+        </span>
+        <span style="--i: 3">
+          Happy
+          <i>Birthday</i>
+        </span>
+        <span style="--i: 4">
+          Dear
+          <i>Kaka</i>
+        </span>
+        <span style="--i: 5">
+          Happy
+          <i>Birthday</i>
+        </span>
+        <span style="--i: 6">
+          Dear
+          <i>Kaka</i>
+        </span>
+        <span style="--i: 7">
+          Happy
+          <i>Birthday</i>
+        </span>
+        <span style="--i: 8">
+          Dear
+          <i>Kaka</i>
+        </span>
+        <span style="--i: 9">
+          Happy
+          <i>Birthday</i>
+        </span>
+        <span style="--i: 10">
+          Dear
+          <i>Kaka</i>
+        </span>
+        <span style="--i: 11">
+          Happy
+          <i>Birthday</i>
+        </span>
+        <span style="--i: 12">
+          Dear
+          <i>Kaka</i>
+        </span>
+      </div>
+    </div>
+    <div id="room-layer">
+      <div class="frame-container" id="frame">
+        <canvas id="photo-canvas"></canvas>
+        <div class="jigsaw-overlay" id="puzzle-overlay"></div>
+        <input
+          type="file"
+          id="fileInput"
+          style="display: none"
+          accept="image/*"
+        />
+        <button id="upload-btn">Tap to Add Photo</button>
+      </div>
+      <div class="text-container">
+        <h1 class="masked-text">Happy Birthday Kaka</h1>
+        <h2 class="split-text" onclick="this.classList.toggle('active')">
+          Thank You
+          <span>Thank You</span>
+          <span>Thank You</span>
+          <span>For Everything</span>
+        </h2>
+        <div class="wave-text">
+          <!-- writing a message with spaces -->
+          <!-- may 2026 bring you lots of happiness and joy -->
+          <span>M</span>
+          <span>a</span>
+          <span>y</span>
+          <span></span>
+          <span>2</span>
+          <span>0</span>
+          <span>2</span>
+          <span>6</span>
+          <span></span>
+          <span>b</span>
+          <span>r</span>
+          <span>i</span>
+          <span>n</span>
+          <span>g</span>
+          <span></span>
+          <span>y</span>
+          <span>o</span>
+          <span>u</span>
+          <span></span>
+          <span>l</span>
+          <span>o</span>
+          <span>t</span>
+          <span>s</span>
+          <span></span>
+          <span>o</span>
+          <span>f</span>
+          <span></span>
+          <span>h</span>
+          <span>a</span>
+          <span>p</span>
+          <span>p</span>
+          <span>i</span>
+          <span>n</span>
+          <span>e</span>
+          <span>s</span>
+          <span>s</span>
+          <span></span>
+          <span>a</span>
+          <span>n</span>
+          <span>d</span>
+          <span></span>
+          <span>j</span>
+          <span>o</span>
+          <span>y</span>
+          <span>!!!!</span>
         </div>
-        <div id="room-layer">
-            <div class="frame-container" id="frame">
-                <canvas id="photo-canvas"></canvas>
-                <div class="jigsaw-overlay" id="puzzle-overlay"></div>
-                <input
-                    type="file"
-                    id="fileInput"
-                    style="display: none;"
-                    accept="image/*"
-                >
-                <button id="upload-btn">Tap to Add Photo</button>
-            </div>
-            <div class="text-container">
-                <h1 class="masked-text">Happy Birthday Kaka</h1>
-                <h2 class="split-text" onclick="this.classList.toggle('active')">
-                    Thank You
-                    <span>Thank You</span>
-                    <span>Thank You</span>
-                    <span>For Everything</span>
-                </h2>
-            </div>
-        </div>
-        <script>
-    /* --------------------------------------
-       TIMING CONFIG
-       -------------------------------------- */
-    const CONFIG = {
-        introDuration: 5000,      
-        particleSize: 3,          
-        scanStep: 3,              
-        assembleSpeed: 0.02,      
-    };
+      </div>
+    </div>
+    <script>
+      const CONFIG = {
+        introDuration: 5000,
+        particleSize: 3,
+        scanStep: 3,
+        assembleSpeed: 0.02,
+      };
 
-   /* --------------------------------------
-       SEQUENCE LOGIC (UPDATED)
-       -------------------------------------- */
-    window.onload = () => {
+      window.onload = () => {
         setTimeout(() => {
-            const intro = document.getElementById('intro-layer');
-            const room = document.getElementById('room-layer');
-            
-            // 1. Fade out intro
-            intro.style.opacity = '0';
-            
-            setTimeout(() => {
-                // 2. Hide intro and Show Room
-                intro.style.display = 'none';
-                room.style.opacity = '1';
-                
-                // 3. START ANIMATION HERE (Moved inside)
-                // This ensures particles start flying in only when you can see the room
-                loadImage(); 
-                
-            }, 1000); // Wait for intro fade out
+          const intro = document.getElementById("intro-layer");
+          const room = document.getElementById("room-layer");
+          intro.style.opacity = "0";
+          setTimeout(() => {
+            intro.style.display = "none";
+            room.style.opacity = "1";
+            loadImage();
+          }, 1000);
         }, CONFIG.introDuration);
-    };
+      };
 
-    /* --------------------------------------
-       PARTICLE SYSTEM
-       -------------------------------------- */
-    const canvas = document.getElementById('photo-canvas');
-    const ctx = canvas.getContext('2d');
-    const overlay = document.getElementById('puzzle-overlay');
-    
-    let width, height;
-    let particles = [];
-    let isAssembled = false;
+      const canvas = document.getElementById("photo-canvas");
+      const ctx = canvas.getContext("2d");
+      const overlay = document.getElementById("puzzle-overlay");
 
-    class Particle {
+      let width, height;
+      let particles = [];
+      let isAssembled = false;
+
+      class Particle {
         constructor(finalX, finalY, color) {
-            this.finalX = finalX;
-            this.finalY = finalY;
-            this.x = Math.random() * width;
-            this.y = Math.random() * height * 2 - height; 
-            this.color = color;
+          this.finalX = finalX;
+          this.finalY = finalY;
+          this.x = Math.random() * width;
+          this.y = Math.random() * height * 2 - height;
+          this.color = color;
         }
 
         update() {
-            const dx = this.finalX - this.x;
-            const dy = this.finalY - this.y;
-            
-            if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) {
-                this.x = this.finalX;
-                this.y = this.finalY;
-            } else {
-                this.x += dx * CONFIG.assembleSpeed;
-                this.y += dy * CONFIG.assembleSpeed;
-            }
+          const dx = this.finalX - this.x;
+          const dy = this.finalY - this.y;
+
+          if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) {
+            this.x = this.finalX;
+            this.y = this.finalY;
+          } else {
+            this.x += dx * CONFIG.assembleSpeed;
+            this.y += dy * CONFIG.assembleSpeed;
+          }
         }
 
         draw() {
-            ctx.fillStyle = this.color;
-            ctx.fillRect(Math.floor(this.x), Math.floor(this.y), CONFIG.particleSize, CONFIG.particleSize);
+          ctx.fillStyle = this.color;
+          ctx.fillRect(
+            Math.floor(this.x),
+            Math.floor(this.y),
+            CONFIG.particleSize,
+            CONFIG.particleSize,
+          );
         }
-    }
+      }
 
-    function initParticles(img) {
-        const frame = document.getElementById('frame');
+      function initParticles(img) {
+        const frame = document.getElementById("frame");
         width = canvas.width = frame.clientWidth;
         height = canvas.height = frame.clientHeight;
 
-        const tmpCanvas = document.createElement('canvas');
-        const tmpCtx = tmpCanvas.getContext('2d');
-        
+        const tmpCanvas = document.createElement("canvas");
+        const tmpCtx = tmpCanvas.getContext("2d");
+
         let scale = Math.max(width / img.width, height / img.height);
         let iw = img.width * scale;
         let ih = img.height * scale;
@@ -522,87 +563,81 @@
         particles = [];
 
         for (let y = 0; y < height; y += CONFIG.scanStep) {
-            for (let x = 0; x < width; x += CONFIG.scanStep) {
-                const index = (Math.floor(x) + Math.floor(y) * width) * 4;
-                if (data[index+3] > 128) {
-                    const col = `rgb(${data[index]},${data[index+1]},${data[index+2]})`;
-                    particles.push(new Particle(x, y, col));
-                }
+          for (let x = 0; x < width; x += CONFIG.scanStep) {
+            const index = (Math.floor(x) + Math.floor(y) * width) * 4;
+            if (data[index + 3] > 128) {
+              const col = `rgb(${data[index]},${data[index + 1]},${data[index + 2]})`;
+              particles.push(new Particle(x, y, col));
             }
+          }
         }
 
         isAssembled = false;
-        overlay.style.opacity = '0'; 
+        overlay.style.opacity = "0";
         animate();
-        
-        setTimeout(() => {
-            isAssembled = true;
-            overlay.style.opacity = '1'; 
-        }, 2000);
-    }
 
-    function animate() {
-        ctx.fillStyle = '#000';
+        setTimeout(() => {
+          isAssembled = true;
+          overlay.style.opacity = "1";
+        }, 2000);
+      }
+
+      function animate() {
+        ctx.fillStyle = "#000";
         ctx.fillRect(0, 0, width, height);
-        
+
         let allDone = true;
-        particles.forEach(p => {
-            p.update();
-            p.draw();
-            if (Math.abs(p.x - p.finalX) > 1) allDone = false;
+        particles.forEach((p) => {
+          p.update();
+          p.draw();
+          if (Math.abs(p.x - p.finalX) > 1) allDone = false;
         });
 
         requestAnimationFrame(animate);
-    }
+      }
 
-    /* --------------------------------------
-       INTERACTION
-       -------------------------------------- */
-    document.getElementById('frame').addEventListener('click', () => {
-        overlay.style.opacity = '0';
-        particles.forEach(p => {
-            p.x = Math.random() * width;
-            p.y = Math.random() * height * 2 - height;
+      document.getElementById("frame").addEventListener("click", () => {
+        overlay.style.opacity = "0";
+        particles.forEach((p) => {
+          p.x = Math.random() * width;
+          p.y = Math.random() * height * 2 - height;
         });
-        
-        setTimeout(() => {
-            overlay.style.opacity = '1';
-        }, 2500);
-    });
 
-    /* --------------------------------------
-       IMAGE LOADING
-       -------------------------------------- */
-    function loadImage() {
+        setTimeout(() => {
+          overlay.style.opacity = "1";
+        }, 2500);
+      });
+
+      function loadImage() {
         const img = new Image();
-        img.src = 'uncle.jpg'; 
-        
+        img.src = "uncle.jpg";
+
         img.onload = () => initParticles(img);
         img.onerror = () => showUpload();
-    }
+      }
 
-    function showUpload() {
-        const btn = document.getElementById('upload-btn');
-        const input = document.getElementById('fileInput');
-        btn.style.display = 'block';
-        
+      function showUpload() {
+        const btn = document.getElementById("upload-btn");
+        const input = document.getElementById("fileInput");
+        btn.style.display = "block";
+
         btn.onclick = () => input.click();
         input.onchange = (e) => {
-            const file = e.target.files[0];
-            if(file) {
-                const reader = new FileReader();
-                reader.onload = (ev) => {
-                    const newImg = new Image();
-                    newImg.onload = () => {
-                        btn.style.display = 'none';
-                        initParticles(newImg);
-                    }
-                    newImg.src = ev.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-    }
-        </script>
-    </body>
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+              const newImg = new Image();
+              newImg.onload = () => {
+                btn.style.display = "none";
+                initParticles(newImg);
+              };
+              newImg.src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+          }
+        };
+      }
+    </script>
+  </body>
 </html>

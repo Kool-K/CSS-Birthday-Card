@@ -105,15 +105,21 @@
         background-position: center;
       }
 
+      /* --- UPDATED FRAME CSS FOR PERFECT ASPECT RATIO --- */
       .frame-container {
         position: relative;
-        /* SMART WIDTH: 
-           - On Portrait (phones): Use 80% of width so it's nice and big.
-           - On Landscape (turned sideways): Limit it so it doesn't get too tall.
-        */
-        width: 80vw;
-        max-width: 45vh; 
-        aspect-ratio: 3/4; 
+        
+        /* FIX: Determine width based on the limiting dimension.
+           In Portrait, 80vw is smaller. In Landscape, 45vh is smaller.
+           This ensures the height (derived from aspect-ratio) never overflows the screen. */
+        width: min(80vw, 45vh);
+        
+        /* Enforce vertical rectangle shape */
+        aspect-ratio: 3 / 4; 
+        
+        /* Prevent flexbox from squashing the height */
+        flex-shrink: 0; 
+
         border: 12px solid #3e2723;
         border-radius: 4px;
         background: #000;
@@ -280,21 +286,18 @@
         letter-spacing: 1px;
         margin-top: 10px;
         
-        /* Flexbox for easy wrapping of words */
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 0.1em; /* Vertical gap between lines if wrapped */
+        gap: 0.1em; 
       }
       
-      /* Word Container: Keeps letters together */
       .word {
           display: inline-block;
-          white-space: nowrap; /* Prevents breaking inside the word */
-          margin: 0 0.25em;    /* Spacing between words */
+          white-space: nowrap; 
+          margin: 0 0.25em;    
       }
 
-      /* Letters inside words get the animation */
       .word span {
         display: inline-block;
         animation: wave 1.5s ease-in-out infinite;
